@@ -10,8 +10,24 @@ name. They achieve this by maintaining a directory of XML files
 that describe those services[link](https://wiki.mozilla.org/Thunderbird:Autoconfiguration:MozillaWebservicePublish).
 This page presents those same XML files but for Postman's I2P servics.
 
-Using the Files:
-----------------
+Using the Files from Disk:
+--------------------------
+
+This is the easiest and least disruptive way to install the Thunderbird
+ISP file, and the default if it is determined to be possible. The
+`i2pmail-OSTYPE-OSARCH` executable, or the `i2pmail-OSTYPE-OSARCH.su3`
+plugin will ask for privileges once, and install the `.xml` file to
+the default location for Thunderbird for your architecture. If you just
+want to use this repository and the `Makefile`, then:
+
+```bash
+git clone https://github.com/eyedeekay/Thunderbird-I2P-Auto-Configuration
+cd Thunderbird-I2P-Auto-Configuration
+sudo make install
+```
+
+Using the Files from Server:
+----------------------------
 
 Is not entirely straightforward yet either. You will need to have:
 
