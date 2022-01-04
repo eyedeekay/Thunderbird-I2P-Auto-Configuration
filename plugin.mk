@@ -71,7 +71,7 @@ version:
 	gothub release -u eyedeekay -r $(REPO_GH) -t "$(VERSION)" -d "`cat desc`"; true
 
 upload:
-	gothub upload -R -u eyedeekay -r $(REPO_GH) -t "$(VERSION)" -f $(BINARY)-$(GOOS)-$(GOARCH).su3 -n $(BINARY)-$(GOOS)-$(GOARCH).su3 -l "`sha256sum $(BINARY)-$(GOOS)-$(GOARCH).su3`"
+	gothub upload -R -p -u eyedeekay -r $(REPO_GH) -t "$(VERSION)" -f $(BINARY)-$(GOOS)-$(GOARCH).su3 -n $(BINARY)-$(GOOS)-$(GOARCH).su3 -l "`sha256sum $(BINARY)-$(GOOS)-$(GOARCH).su3`"
 
 upload-windows:
 	GOOS=windows GOARCH=amd64 make upload
@@ -90,8 +90,7 @@ upload-bsd:
 	GOOS=freebsd GOARCH=amd64 make upload
 	GOOS=openbsd GOARCH=amd64 make upload
 
-upload-all: upload-linux upload-bsd
-#upload-all: upload-windows upload-linux upload-osx upload-bsd
+upload-all: upload-windows upload-linux upload-osx upload-bsd
 
 download-su3s:
 	GOOS=windows GOARCH=amd64 make download-single-su3
