@@ -19,8 +19,23 @@ var (
 	port      = flag.String("port", "8080", "port to listen on")
 	host      = flag.String("host", "i2pmail.org", "host to listen on. Will be forced onto localhost if operating in file-mode")
 	aliashost = flag.String("aliashost", "mail.i2p", "alias hostname to write a second config file for.")
-	directory = flag.String("directory", "./www", "directory to serve")
+	directory = flag.String("directory", webDir(), "directory to serve")
 )
+
+func webDir() string {
+	dir0 := "./www"
+	dir1 := "./conf/www"
+	if dirExists(dir0) {
+		return dir0
+	}
+	if dirExists(dir1) {
+		return dir1
+	}
+	if fileExists("./index.html") {
+		return "./"
+	}
+	return "./www"
+}
 
 var ispXML = `<?xml version="1.0" encoding="UTF-8"?>
 
