@@ -268,6 +268,10 @@ func uiElevate() (string, []string) {
 	if runtime.GOOS == "windows" {
 		return "powershell", []string{"-Command", "\"Start-Process cmd -Verb RunAs -ArgumentList '/c cd /d %CD% && " + restateCommand + "'\""}
 	}
+	if runtime.GOOS == "darwin" {
+		return "osascript", []string{"-e", "do shell script \"" + restateCommand + "\" with administrator privileges"}
+	}
+
 	if fileExists("/usr/bin/gksudo") {
 		return "/usr/bin/gksudo", []string{}
 	}
