@@ -28,6 +28,16 @@ cd Thunderbird-I2P-Auto-Configuration
 sudo make install
 ```
 
+ - [Mac OSX Intel](http://idk.i2p/Thunderbird-I2P-Auto-Configuration/i2pmail-darwin-amd64.su3)
+ - [Mac OSX M1](http://idk.i2p/Thunderbird-I2P-Auto-Configuration/i2pmail-darwin-arm64.su3)
+ - [FreeBSD amd64](http://idk.i2p/Thunderbird-I2P-Auto-Configuration/i2pmail-freebsd-amd64.su3)
+ - [Linux 386](http://idk.i2p/Thunderbird-I2P-Auto-Configuration/i2pmail-linux-386.su3)
+ - [Linux amd64](http://idk.i2p/Thunderbird-I2P-Auto-Configuration/i2pmail-linux-amd64.su3)
+ - [Linux arm64](http://idk.i2p/Thunderbird-I2P-Auto-Configuration/i2pmail-linux-arm64.su3)
+ - [OpenBSD amd64](http://idk.i2p/Thunderbird-I2P-Auto-Configuration/i2pmail-openbsd-amd64.su3)
+ - [Windows 386](http://idk.i2p/Thunderbird-I2P-Auto-Configuration/i2pmail-windows-386.su3)
+ - [Windows amd64](http://idk.i2p/Thunderbird-I2P-Auto-Configuration/i2pmail-windows-amd64.su3)
+
 Using the Files from Server:
 ----------------------------
 
