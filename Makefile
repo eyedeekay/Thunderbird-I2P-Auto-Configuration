@@ -16,9 +16,9 @@ index:
 	@cat mail.i2p.xml >> index.html
 	@echo "</pre>" >> index.html
 	@echo "<h3>i2pmail.org.xml</h3>" >> index.html
-	@echo "<pre>" >> index.html
+	@echo "<pre><code>" >> index.html
 	@cat i2pmail.org.xml >> index.html
-	@echo "</pre>" >> index.html
+	@echo "</code></pre>" >> index.html
 	@echo "</body>" >> index.html
 	cp index.html conf/www/
 	cp ../style.css conf/www/
