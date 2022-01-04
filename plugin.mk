@@ -51,6 +51,7 @@ su3:
 		-autostart=true \
 		-clientname=$(BINARY)-$(GOOS)-$(GOARCH) \
 		-consolename="$(REPO_GH) - $(CONSOLEPOSTNAME)" \
+		-consoleurl="http://127.0.0.1:7683" \
 		-name="$(BINARY)-$(GOOS)-$(GOARCH)" \
 		-delaystart="1" \
 		-desc="`cat desc`" \

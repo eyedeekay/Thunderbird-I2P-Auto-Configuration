@@ -16,11 +16,13 @@ import (
 )
 
 var (
-	port      = flag.String("port", "8080", "port to listen on")
+	port      = flag.String("port", "7683", "port to listen on")
 	host      = flag.String("host", "i2pmail.org", "host to listen on. Will be forced onto localhost if operating in file-mode")
 	aliashost = flag.String("aliashost", "mail.i2p", "alias hostname to write a second config file for.")
 	directory = flag.String("directory", webDir(), "directory to serve")
 )
+
+var listenhost = ""
 
 func webDir() string {
 	dir0 := "./www"
@@ -316,9 +318,10 @@ func checkForAdmin() bool {
 
 func main() {
 	flag.Parse()
+	listenhost = *host
 	ispFile := checkThunderbirdIsp()
 	if ispFile == 1 {
-		*host = "127.0.0.1"
+		listenhost = "127.0.0.1"
 		restateCommand := []string{os.Args[0], "--host", *host, "--port", *port, "--directory", *directory}
 		if !checkForAdmin() {
 			uiCommand, uiArgs := uiElevate()
@@ -385,7 +388,7 @@ func serve() {
 	address := net.JoinHostPort(*host, *port)
 	log.Printf("Listening on %s...", address)
 	log.Printf("Serving %s...", *directory)
-	log.Printf("Args were %s, %s, %s", *port, *host, *directory)
+	log.Printf("Args were %s, %s, %s", *port, listenhost, *directory)
 	err := http.ListenAndServe(address, fs)
 	if err != nil {
 		log.Fatal(err)
