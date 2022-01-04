@@ -178,7 +178,7 @@ func backupHosts() error {
 func platformThunderbirdIspPath() string {
 	switch runtime.GOOS {
 	case "darwin":
-		return "/Applications/Thunderbird.app/Contents/MacOS/isp"
+		return "/Applications/Thunderbird.app/Contents/Resources/isp"
 	case "linux":
 		return "/usr/share/thunderbird/isp"
 	case "windows":
