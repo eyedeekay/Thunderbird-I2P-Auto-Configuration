@@ -119,3 +119,6 @@ index:
 	pandoc README.md >> index.html
 	@echo "</body>" >> index.html
 	@echo "</html>" >> index.html
+
+unrelease:
+	gothub delete -u eyedeekay -r $(REPO_GH) -t "$(VERSION)"
