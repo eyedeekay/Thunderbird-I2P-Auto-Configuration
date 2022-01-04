@@ -17,8 +17,8 @@ import (
 
 var (
 	port      = flag.String("port", "8080", "port to listen on")
-	host      = flag.String("host", "i2pmail.org", "host to listen on")
-	aliashost = flag.String("aliashost", "mail.i2p", "host to listen on")
+	host      = flag.String("host", "i2pmail.org", "host to listen on. Will be forced onto localhost if operating in file-mode")
+	aliashost = flag.String("aliashost", "mail.i2p", "alias hostname to write a second config file for.")
 	directory = flag.String("directory", "./www", "directory to serve")
 )
 
@@ -280,13 +280,28 @@ func uiElevate() (string, []string) {
 	return "sudo", []string{}
 }
 
+func checkForAdmin() bool {
+	if runtime.GOOS == "windows" {
+		_, err := os.Open("\\\\.\\PHYSICALDRIVE0")
+		if err != nil {
+			return false
+		}
+		return true
+	} else {
+		if os.Geteuid() == 0 {
+			return true
+		}
+		return false
+	}
+}
+
 func main() {
 	flag.Parse()
 	ispFile := checkThunderbirdIsp()
 	if ispFile == 1 {
 		*host = "127.0.0.1"
 		restateCommand := []string{os.Args[0], "--host", *host, "--port", *port, "--directory", *directory}
-		if os.Geteuid() != 0 {
+		if !checkForAdmin() {
 			uiCommand, uiArgs := uiElevate()
 			log.Printf("Elevating to %s...", "root")
 			if len(uiArgs) > 0 {
@@ -318,7 +333,7 @@ func main() {
 	} else if ispFile == -1 {
 		restateCommand := []string{os.Args[0], "--host", *host, "--port", *port, "--directory", *directory}
 		if !checkHosts() {
-			if os.Geteuid() == 0 {
+			if checkForAdmin() {
 				runAs := os.Getenv("SUDO_USER")
 				if err := editHosts(); err != nil {
 					log.Fatal(err)
