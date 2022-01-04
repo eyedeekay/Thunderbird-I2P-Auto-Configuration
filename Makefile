@@ -13,11 +13,11 @@ index:
 	@echo "<h2>XML Files</h2>" >> index.html
 	@echo "<h3>mail.i2p.xml</h3>" >> index.html
 	@echo "<pre>" >> index.html
-	@echo -n "`cat mail.i2p.xml`" >> index.html
+	@cat mail.i2p.xml >> index.html
 	@echo "</pre>" >> index.html
 	@echo "<h3>i2pmail.org.xml</h3>" >> index.html
 	@echo "<pre>" >> index.html
-	@echo -n "`cat i2pmail.org.xml`" >> index.html
+	@cat i2pmail.org.xml >> index.html
 	@echo "</pre>" >> index.html
 	@echo "</body>" >> index.html
 	cp index.html conf/www/
