@@ -286,15 +286,15 @@ func main() {
 	ispFile := checkThunderbirdIsp()
 	if ispFile == 1 {
 		if os.Geteuid() != 0 {
-			uiElevate, uiArgs := uiElevate()
+			uiCommand, uiArgs := uiElevate()
 			log.Printf("Elevating to %s...", "root")
 			if len(uiArgs) > 0 {
-				log.Printf("%s %s", uiElevate, strings.Join(uiArgs, " "))
-				exec.Command(uiElevate, uiArgs...).Run()
+				log.Printf("%s %s", uiCommand, strings.Join(uiArgs, " "))
+				exec.Command(uiCommand, uiArgs...).Run()
 				return
 			}
-			log.Printf("%s %s %s :%s", uiElevate, uiArgs, restateCommand, thunderbirdIspPath())
-			exec.Command(uiElevate, restateCommand...).Run()
+			log.Printf("%s %s %s :%s", uiCommand, strings.Join(uiArgs, " "), strings.Join(restateCommand, " "), thunderbirdIspPath())
+			exec.Command(uiCommand, restateCommand...).Run()
 			return
 		}
 		log.Printf("Creating %s...", thunderbirdIspXMLFile())
@@ -319,12 +319,20 @@ func main() {
 				if runAs == "" {
 					log.Fatal("SUDO_USER not set")
 				}
-				exec.Command("sudo", "-u", runAs, os.Args[0], "--host", *host, "--port", *port, "--directory", *directory).Run()
-				os.Exit(0)
+				if runtime.GOOS != "windows" {
+					exec.Command("sudo", "-u", runAs, os.Args[0], "--host", *host, "--port", *port, "--directory", *directory).Run()
+					os.Exit(0)
+				}
+				os.Exit(1)
 			} else {
-				uiElevate, uiArgs := uiElevate()
-				exec.Command(uiElevate, append(uiArgs, os.Args[0], "--host", *host, "--port", *port, "--directory", *directory)...)
-				log.Fatal("You must be root to edit the hosts file")
+				uiCommand, uiArgs := uiElevate()
+				if len(uiArgs) > 0 {
+					log.Printf("%s %s", uiCommand, strings.Join(uiArgs, " "))
+					exec.Command(uiCommand, uiArgs...).Run()
+					return
+				}
+				exec.Command(uiCommand, restateCommand...).Run()
+				return
 			}
 		}
 		fs := http.FileServer(http.Dir(*directory))
