@@ -68,10 +68,10 @@ sum:
 	sha256sum $(BINARY)-$(GOOS)-$(GOARCH).su3
 
 version:
-	gothub release -u eyedeekay -r $(REPO_GH) -t "$(VERSION)" -d "`cat desc`"; true
+	gothub release -p -u eyedeekay -r $(REPO_GH) -t "$(VERSION)" -d "`cat desc`"; true
 
 upload:
-	gothub upload -R -p -u eyedeekay -r $(REPO_GH) -t "$(VERSION)" -f $(BINARY)-$(GOOS)-$(GOARCH).su3 -n $(BINARY)-$(GOOS)-$(GOARCH).su3 -l "`sha256sum $(BINARY)-$(GOOS)-$(GOARCH).su3`"
+	gothub upload -R -u eyedeekay -r $(REPO_GH) -t "$(VERSION)" -f $(BINARY)-$(GOOS)-$(GOARCH).su3 -n $(BINARY)-$(GOOS)-$(GOARCH).su3 -l "`sha256sum $(BINARY)-$(GOOS)-$(GOARCH).su3`"
 
 upload-windows:
 	GOOS=windows GOARCH=amd64 make upload
