@@ -1,5 +1,6 @@
 
-echo:
+exe:
+	go build $(ARG) -tags="netgo" -o $(BINARY)-$(GOOS)-$(GOARCH) ./cmd/$(BINARY)
 
 include plugin.mk
 

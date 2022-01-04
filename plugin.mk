@@ -11,6 +11,7 @@ BINARY=i2pmail
 SIGNER=hankhill19580@gmail.com
 CONSOLEPOSTNAME=IRC
 USER_GH=eyedeekay
+REPO_GH=Thunderbird-I2P-Auto-Configuration
 
 build: dep
 	go build $(ARG) -tags="netgo" -o $(BINARY)-$(GOOS)-$(GOARCH) ./cmd/$(BINARY)
@@ -49,14 +50,14 @@ su3:
 		-author=$(SIGNER) \
 		-autostart=true \
 		-clientname=$(BINARY)-$(GOOS)-$(GOARCH) \
-		-consolename="$(BINARY) - $(CONSOLEPOSTNAME)" \
+		-consolename="$(REPO_GH) - $(CONSOLEPOSTNAME)" \
 		-name="$(BINARY)-$(GOOS)-$(GOARCH)" \
 		-delaystart="1" \
 		-desc="`cat desc`" \
 		-exename=$(BINARY)-$(GOOS)-$(GOARCH) \
 		-icondata=icon/icon.png \
-		-updateurl="http://idk.i2p/$(BINARY)/$(BINARY)-$(GOOS)-$(GOARCH).su3" \
-		-website="http://idk.i2p/$(BINARY)/" \
+		-updateurl="http://idk.i2p/$(REPO_GH)/$(BINARY)-$(GOOS)-$(GOARCH).su3" \
+		-website="http://idk.i2p/$(REPO_GH)/" \
 		-command="$(BINARY)-$(GOOS)-$(GOARCH) -conf \"\$$PLUGIN/catbox-i2p.conf\"" \
 		-license=AGPL \
 		-res=conf/
@@ -66,10 +67,10 @@ sum:
 	sha256sum $(BINARY)-$(GOOS)-$(GOARCH).su3
 
 version:
-	gothub release -u eyedeekay -r $(BINARY) -t "$(VERSION)" -d "`cat desc`"; true
+	gothub release -u eyedeekay -r $(REPO_GH) -t "$(VERSION)" -d "`cat desc`"; true
 
 upload:
-	gothub upload -R -u eyedeekay -r $(BINARY) -t "$(VERSION)" -f $(BINARY)-$(GOOS)-$(GOARCH).su3 -n $(BINARY)-$(GOOS)-$(GOARCH).su3 -l "`sha256sum $(BINARY)-$(GOOS)-$(GOARCH).su3`"
+	gothub upload -R -u eyedeekay -r $(REPO_GH) -t "$(VERSION)" -f $(BINARY)-$(GOOS)-$(GOARCH).su3 -n $(BINARY)-$(GOOS)-$(GOARCH).su3 -l "`sha256sum $(BINARY)-$(GOOS)-$(GOARCH).su3`"
 
 upload-windows:
 	GOOS=windows GOARCH=amd64 make upload
@@ -102,7 +103,7 @@ download-su3s:
 	GOOS=openbsd GOARCH=amd64 make download-single-su3
 
 download-single-su3:
-	wget -N -c "https://github.com/$(USER_GH)/$(BINARY)/releases/download/$(VERSION)/$(BINARY)-$(GOOS)-$(GOARCH).su3"
+	wget -N -c "https://github.com/$(USER_GH)/$(REPO_GH)/releases/download/$(VERSION)/$(BINARY)-$(GOOS)-$(GOARCH).su3"
 
 release: clean all version upload-all
 
@@ -110,7 +111,7 @@ index:
 	@echo "<!DOCTYPE html>" > index.html
 	@echo "<html>" >> index.html
 	@echo "<head>" >> index.html
-	@echo "  <title>$(BINARY) - $(CONSOLEPOSTNAME)</title>" >> index.html
+	@echo "  <title>$(REPO_GH) - $(CONSOLEPOSTNAME)</title>" >> index.html
 	@echo "  <link rel=\"stylesheet\" type=\"text/css\" href =\"/style.css\" />" >> index.html
 	@echo "</head>" >> index.html
 	@echo "<body>" >> index.html
