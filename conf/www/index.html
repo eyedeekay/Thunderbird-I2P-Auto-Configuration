@@ -4,6 +4,7 @@
 </head>
 <body>
 <h1 id="thunderbird-i2p-auto-configuration">Thunderbird I2P Auto Configuration</h1>
+<p><strong>NOTE: <em>Untested on Windows</em></strong></p>
 <p>Automatic configuration of Mozilla Thunderbird for Postman’s mail services. These services are configured by default on all current I2P routers, but using them with an email client has an additional barrier to configuration that other mail services do not have. Most email clients are aware of email services and provide some auto-configuration which is detected by domain name. They achieve this by maintaining a directory of XML files that describe those services<a href="https://wiki.mozilla.org/Thunderbird:Autoconfiguration:MozillaWebservicePublish">link</a>. This page presents those same XML files but for Postman’s I2P servics.</p>
 <h2 id="using-the-files-from-disk">Using the Files from Disk:</h2>
 <p>This is the easiest and least disruptive way to install the Thunderbird ISP file, and the default if it is determined to be possible. The <code>i2pmail-OSTYPE-OSARCH</code> executable, or the <code>i2pmail-OSTYPE-OSARCH.su3</code> plugin will ask for privileges once, and install the <code>.xml</code> file to the default location for Thunderbird for your architecture. If you just want to use this repository and the <code>Makefile</code>, then:</p>

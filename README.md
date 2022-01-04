@@ -1,5 +1,7 @@
 # Thunderbird I2P Auto Configuration
 
+**NOTE: *Untested on Windows***
+
 Automatic configuration of Mozilla Thunderbird for Postman's
 mail services. These services are configured by default on all
 current I2P routers, but using them with an email client has
