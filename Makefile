@@ -9,7 +9,7 @@ index:
 	@echo "<link rel="stylesheet" type="text/css" href="/style.css" />" >> index.html
 	@echo "</head>" >> index.html
 	@echo "<body>" >> index.html
-	markdown README.md >> index.html >> index.html
+	pandoc README.md >> index.html >> index.html
 	@echo "<h2>XML Files</h2>" >> index.html
 	@echo "<h3>mail.i2p.xml</h3>" >> index.html
 	@echo "<pre>" >> index.html
