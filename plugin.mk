@@ -90,7 +90,8 @@ upload-bsd:
 	GOOS=freebsd GOARCH=amd64 make upload
 	GOOS=openbsd GOARCH=amd64 make upload
 
-upload-all: upload-windows upload-linux upload-osx upload-bsd
+upload-all: upload-linux upload-bsd
+#upload-all: upload-windows upload-linux upload-osx upload-bsd
 
 download-su3s:
 	GOOS=windows GOARCH=amd64 make download-single-su3
