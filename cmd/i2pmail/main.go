@@ -282,19 +282,22 @@ func uiElevate() (string, []string) {
 
 func main() {
 	flag.Parse()
-	restateCommand := []string{os.Args[0], "--host", *host, "--port", *port, "--directory", *directory}
 	ispFile := checkThunderbirdIsp()
 	if ispFile == 1 {
+		*host = "127.0.0.1"
+		restateCommand := []string{os.Args[0], "--host", *host, "--port", *port, "--directory", *directory}
 		if os.Geteuid() != 0 {
 			uiCommand, uiArgs := uiElevate()
 			log.Printf("Elevating to %s...", "root")
 			if len(uiArgs) > 0 {
 				log.Printf("%s %s", uiCommand, strings.Join(uiArgs, " "))
 				exec.Command(uiCommand, uiArgs...).Run()
+				serve()
 				return
 			}
 			log.Printf("%s %s %s :%s", uiCommand, strings.Join(uiArgs, " "), strings.Join(restateCommand, " "), thunderbirdIspPath())
 			exec.Command(uiCommand, restateCommand...).Run()
+			serve()
 			return
 		}
 		log.Printf("Creating %s...", thunderbirdIspXMLFile())
@@ -307,9 +310,13 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+		os.Exit(0)
 	} else if ispFile == 0 {
+		*host = "localhost"
+		serve()
 		os.Exit(ispFile)
 	} else if ispFile == -1 {
+		restateCommand := []string{os.Args[0], "--host", *host, "--port", *port, "--directory", *directory}
 		if !checkHosts() {
 			if os.Geteuid() == 0 {
 				runAs := os.Getenv("SUDO_USER")
@@ -332,18 +339,21 @@ func main() {
 					return
 				}
 				exec.Command(uiCommand, restateCommand...).Run()
+				serve()
 				return
 			}
 		}
-		fs := http.FileServer(http.Dir(*directory))
+	}
+}
 
-		address := net.JoinHostPort(*host, *port)
-		log.Printf("Listening on %s...", address)
-		log.Printf("Serving %s...", *directory)
-		log.Printf("Args were %s, %s, %s", *port, *host, *directory)
-		err := http.ListenAndServe(address, fs)
-		if err != nil {
-			log.Fatal(err)
-		}
+func serve() {
+	fs := http.FileServer(http.Dir(*directory))
+	address := net.JoinHostPort(*host, *port)
+	log.Printf("Listening on %s...", address)
+	log.Printf("Serving %s...", *directory)
+	log.Printf("Args were %s, %s, %s", *port, *host, *directory)
+	err := http.ListenAndServe(address, fs)
+	if err != nil {
+		log.Fatal(err)
 	}
 }
