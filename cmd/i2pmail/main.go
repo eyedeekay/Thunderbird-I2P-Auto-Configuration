@@ -264,6 +264,10 @@ func checkHosts() bool {
 }
 
 func uiElevate() (string, []string) {
+	restateCommand := fmt.Sprintf("%s %s %s %s %s %s %s", os.Args[0], "--host", *host, "--port", *port, "--directory", *directory)
+	if runtime.GOOS == "windows" {
+		return "powershell", []string{"-Command", "\"Start-Process cmd -Verb RunAs -ArgumentList '/c cd /d %CD% && " + restateCommand + "'\""}
+	}
 	if fileExists("/usr/bin/gksudo") {
 		return "/usr/bin/gksudo", []string{}
 	}
@@ -284,8 +288,13 @@ func main() {
 		if os.Geteuid() != 0 {
 			uiElevate, uiArgs := uiElevate()
 			log.Printf("Elevating to %s...", "root")
+			if len(uiArgs) > 0 {
+				log.Printf("%s %s", uiElevate, strings.Join(uiArgs, " "))
+				exec.Command(uiElevate, uiArgs...).Run()
+				return
+			}
 			log.Printf("%s %s %s :%s", uiElevate, uiArgs, restateCommand, thunderbirdIspPath())
-			exec.Command(uiElevate, append(uiArgs, restateCommand...)...).Run()
+			exec.Command(uiElevate, restateCommand...).Run()
 			return
 		}
 		log.Printf("Creating %s...", thunderbirdIspXMLFile())

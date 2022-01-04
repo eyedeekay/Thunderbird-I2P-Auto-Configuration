@@ -24,8 +24,8 @@ index:
 	cp ../style.css conf/www/
 
 install:
-	cp mail.i2p.xml /usr/share/thunderbird/i2p/mail.i2p.xml
-	cp i2pmail.org.xml /usr/share/thunderbird/i2p/i2pmail.org.xml
+	cp mail.i2p.xml /usr/share/thunderbird/isp/mail.i2p.xml
+	cp i2pmail.org.xml /usr/share/thunderbird/isp/i2pmail.org.xml
 
 uninstall:
-	rm /usr/share/thunderbird/i2p/mail.i2p.xml /usr/share/thunderbird/i2p/i2pmail.org.xml
+	rm /usr/share/thunderbird/isp/mail.i2p.xml /usr/share/thunderbird/isp/i2pmail.org.xml
