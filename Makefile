@@ -4,22 +4,22 @@ echo:
 include plugin.mk
 
 index:
-	@echo "<head>"
-	@echo "<title>Makefile</title>"
-	@echo "<link rel="stylesheet" type="text/css" href="/style.css" />"
-	@echo "</head>"
-	@echo "<body>"
-	markdown README.md >> index.html
-	@echo "<h2>XML Files</h2>"
-	@echo "<h3>mail.i2p.xml</h3>"
-	@echo "<pre>"
-	@echo -n "`cat mail.i2p.xml`"
-	@echo "</pre>"
-	@echo "<h3>i2pmail.org.xml</h3>"
-	@echo "<pre>"
-	@echo -n "`cat i2pmail.org.xml`"
-	@echo "</pre>"
-	@echo "</body>"
+	@echo "<head>" > index.html
+	@echo "<title>Makefile</title>" >> index.html
+	@echo "<link rel="stylesheet" type="text/css" href="/style.css" />" >> index.html
+	@echo "</head>" >> index.html
+	@echo "<body>" >> index.html
+	markdown README.md >> index.html >> index.html
+	@echo "<h2>XML Files</h2>" >> index.html
+	@echo "<h3>mail.i2p.xml</h3>" >> index.html
+	@echo "<pre>" >> index.html
+	@echo -n "`cat mail.i2p.xml`" >> index.html
+	@echo "</pre>" >> index.html
+	@echo "<h3>i2pmail.org.xml</h3>" >> index.html
+	@echo "<pre>" >> index.html
+	@echo -n "`cat i2pmail.org.xml`" >> index.html
+	@echo "</pre>" >> index.html
+	@echo "</body>" >> index.html
 	cp index.html conf/www/
 	cp ../style.css conf/www/
 
